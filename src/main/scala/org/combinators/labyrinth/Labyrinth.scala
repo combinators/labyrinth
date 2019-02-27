@@ -40,7 +40,7 @@ class Labyrinth(task: Task, client: MqttClient) extends LazyLogging {
     override def messageArrived(topic: String, message: MqttMessage): Unit = {
       decode[GetSolutions](new String(message.getPayload)).foreach {
         case GetSolutions(maxCount) =>
-          logger.debug(s"Received request for $maxCount solutions")
+          logger.debug(s"Received request: ${new String(message.getPayload)}")
           (0 until maxCount).foreach { _ =>
             client.synchronized {
               if (resultIterator.hasNext) {
