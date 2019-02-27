@@ -24,9 +24,9 @@ class Labyrinth(task: Task, client: MqttClient) extends LazyLogging {
       .mkString("{", "\n", "}"))
 
   lazy val resultIterator: Iterator[Seq[Movement]] = new Iterator[Seq[Movement]] {
-    var pos = 0
+    var pos: Int = 0
     override def hasNext: Boolean = true
-    override def next: Seq[Movement] = {
+    override def next: Seq[Movement] = pos.synchronized {
       val result = results.interpretedTerms.index(pos)
       pos += 1
       if (results.size.exists(s => pos >= s)) {
@@ -42,10 +42,12 @@ class Labyrinth(task: Task, client: MqttClient) extends LazyLogging {
         case GetSolutions(maxCount) =>
           logger.debug(s"Received request for $maxCount solutions")
           (0 until maxCount).foreach { _ =>
-            if (resultIterator.hasNext) {
-              val next = Solution(resultIterator.next()).asJson.toString
-              logger.debug(s"Sending: $next")
-              client.publish(task.topicForSolutions, next.getBytes, 2, true)
+            client.synchronized {
+              if (resultIterator.hasNext) {
+                val next = Solution(resultIterator.next()).asJson.toString
+                logger.debug(s"Sending: $next")
+                client.publish(task.topicForSolutions, next.getBytes, 2, true)
+              }
             }
           }
       }

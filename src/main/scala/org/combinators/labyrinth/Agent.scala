@@ -24,6 +24,7 @@ object Agent extends App with LazyLogging {
   options.setAutomaticReconnect(true)
   options.setCleanSession(true)
   options.setConnectionTimeout(10)
+  options.setMaxInflight(1000)
   client.connect(options)
 
   logger.debug(s"Receiving tasks from topic: $taskTopic")

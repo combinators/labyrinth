@@ -637,3 +637,6 @@ ASALocalRun/
 healthchecksdb
 
 # End of https://www.gitignore.io/api/vim,sbt,unity,emacs,scala,eclipse,intellij+all,visualstudio,visualstudiocode
+
+## Mosquitto
+*.lck
