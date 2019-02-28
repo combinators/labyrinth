@@ -26,22 +26,22 @@ class Repository(task: Task) {
   }
 
   @combinator object up {
-    def apply(moves: Seq[Movement], isFree: Unit): Seq[Movement] = Up() +: moves
+    def apply(moves: Seq[Movement], isFree: Unit): Seq[Movement] = moves :+ Up()
     val semanticType: Type = 'Pos(positionRow, 'S(positionColumn)) =>: 'Free(positionRow, positionColumn) =>: 'Pos(positionRow, positionColumn)
   }
 
   @combinator object down {
-    def apply(moves: Seq[Movement], isFree: Unit): Seq[Movement] = Down() +: moves
+    def apply(moves: Seq[Movement], isFree: Unit): Seq[Movement] = moves :+ Down()
     val semanticType: Type = 'Pos(positionRow, positionColumn) =>: 'Free(positionRow, 'S(positionColumn)) =>: 'Pos(positionRow, 'S(positionColumn))
   }
 
   @combinator object left {
-    def apply(moves: Seq[Movement], isFree: Unit): Seq[Movement] = Left() +: moves
+    def apply(moves: Seq[Movement], isFree: Unit): Seq[Movement] = moves :+ Left()
     val semanticType: Type = 'Pos('S(positionRow), positionColumn) =>: 'Free(positionRow, positionColumn) =>: 'Pos(positionRow, positionColumn)
   }
 
   @combinator object right {
-    def apply(moves: Seq[Movement], isFree: Unit): Seq[Movement] = Right() +: moves
+    def apply(moves: Seq[Movement], isFree: Unit): Seq[Movement] = moves :+ Right()
     val semanticType: Type = 'Pos(positionRow, positionColumn) =>: 'Free('S(positionRow), positionColumn) =>: 'Pos('S(positionRow), positionColumn)
   }
 
@@ -53,7 +53,7 @@ class Repository(task: Task) {
   private def addFreeFields(toRepo: ReflectedRepository[Repository]): ReflectedRepository[Repository] = {
     val freeFields: Seq[FreeField] =
       (0 until height).flatMap(row => (0 until width).collect {
-        case col if task.labyrinth(row)(col) => new FreeField(row, col)
+        case col if task.labyrinth(row)(col) => new FreeField(col, row)
       })
     freeFields.foldLeft(toRepo) {
       case (repo, freeField) => repo.addCombinator(freeField)
