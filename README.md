@@ -17,6 +17,9 @@ Jan Bessai, Anna Vasileva: User Support for the Combinator Logic Synthesizer Fra
 
 Results are served via MQTT.
 
+Anna Vasilieva and Moritz Reudel created a [video demonstration](https://github.com/combinators/labyrinth/blob/master/video.mp4) using the laser based visualization facilities of the test lab at [FLW Dortmund](https://flw.mb.tu-dortmund.de/).
+In the demo results are interpreted by Unity3D which then controlls the laser system to show computed movements.
+
 The protocol is as follows:
 0. Start an MQTT broker, e.g. [Mosquitto](https://mosquitto.org/) via `mosquitto -c mosquitto.conf` with the [provided config](https://github.com/combinators/labyrinth/blob/master/mosquitto.conf).
 1. Start an [Agent](https://github.com/combinators/labyrinth/blob/master/src/main/scala/org/combinators/labyrinth/Agent.scala) using `sbt run`.
@@ -34,3 +37,4 @@ To avoid trouble, make sure the agent is running before starting the demo client
 
 By default the [log level](https://github.com/combinators/labyrinth/blob/master/src/main/resources/logback.xml) is [configured](https://logback.qos.ch/manual/configuration.html) to `DEBUG`. 
 This will print all JSON messages exchanged with the agent.
+
