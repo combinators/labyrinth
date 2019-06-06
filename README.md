@@ -17,7 +17,7 @@ Jan Bessai, Anna Vasileva: User Support for the Combinator Logic Synthesizer Fra
 
 Results are served via MQTT.
 
-Anna Vasilieva and Moritz Reudel created a [video demonstration](https://github.com/combinators/labyrinth/blob/master/video.mp4) using the laser based visualization facilities of the test lab at [FLW Dortmund](https://flw.mb.tu-dortmund.de/).
+Anna Vasileva and Moritz Roidl created a [video demonstration](https://github.com/combinators/labyrinth/blob/master/video.mp4) using the laser based visualization facilities of the test lab at [FLW Dortmund](https://flw.mb.tu-dortmund.de/).
 In the demo results are interpreted by Unity3D which then controlls the laser system to show computed movements.
 
 The protocol is as follows:
